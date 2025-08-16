@@ -1,9 +1,11 @@
 <template>
   <div>
-    <p>index: {{ index }}</p>
-    <p>계산된 값: {{ computedValue }}</p>
-    <button @click="incrementCount">incrementCount</button>
-    <button @click="incrementIndex">incrementIndex</button>
+    <p>현재 점수: {{ score }}</p>
+    <div v-if="score >= 90">학점: A</div>
+    <div v-else-if="score >= 80">학점: B</div>
+    <div v-else-if="score >= 70">학점: C</div>
+    <div v-else-if="score >= 60">학점: D</div>
+    <div v-else>학점: F</div>
   </div>
 </template>
 
@@ -12,29 +14,9 @@ export default {
     name: "DemoPage",
     data() {
       return {
-        index: 0,
-        count: 0
+        score: 85,
       };
-    },
-    computed: {
-      computedValue(){
-        return this.count*2;
-      },
-    },
-    watch: {
-      count(newValue, oldValue){
-        console.log(`count 변화 감지: ${oldValue} -> ${newValue}`);
-      },
-      //api call
-    },
-    methods: {
-      incrementCount(){
-        this.count++;
-      },
-      incrementIndex(){
-        this.index++;
-      },
-    },
+    },    
 };
 </script>
 
