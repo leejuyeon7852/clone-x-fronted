@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .feed-list-container {
   height: 60vh;
   overflow-y: auto;

@@ -3,6 +3,7 @@ import LoginPage from "@/views/LoginPage.vue"
 import SignupPage from "@/views/SignupPage.vue"
 import MainPage from "@/views/MainPage.vue"
 import {createRouter, createWebHistory} from "vue-router"
+import LifeCycle from "@/views/LifeCycle.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -27,6 +28,10 @@ const router = createRouter({
             path: '/main',
             component: MainPage
         },
+        {
+            path: '/life',
+            component: LifeCycle
+        }
     ]
 })
 
