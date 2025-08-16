@@ -1,53 +1,40 @@
 <template>
-   <div>
+  <div>
     <p>index: {{ index }}</p>
-    <p>상품 가격: {{ price }}</p>
-    <p>할인율: {{ discountRate }}</p>
-    <p>computed로 계산한 최종 가격: {{ finalPrice }}</p>
-    <p>method로 계산한 최종 가격: {{ calculateFinalPrice() }}</p>
-    <div>
-      <button @click="updatePrice">updatePrice</button>
-    </div>
-    <div>
-      <button @click="updateDiscountRate">updateDiscountRate</button>
-    </div>
-    <div>
-      <button @click="updateIndex">updateIndex</button>
-    </div>
- </div>
+    <p>계산된 값: {{ computedValue }}</p>
+    <button @click="incrementCount">incrementCount</button>
+    <button @click="incrementIndex">incrementIndex</button>
+  </div>
 </template>
 
 <script>
 export default {
     name: "DemoPage",
-     data() {
+    data() {
       return {
         index: 0,
-        price: 10000,
-        discountRate: 0.1
+        count: 0
       };
     },
     computed: {
-      finalPrice() {
-        console.log("computed!!");
-        return this.price * (1 - this.discountRate);
-      }
+      computedValue(){
+        return this.count*2;
+      },
+    },
+    watch: {
+      count(newValue, oldValue){
+        console.log(`count 변화 감지: ${oldValue} -> ${newValue}`);
+      },
+      //api call
     },
     methods: {
-      updatePrice(){
-        this.price = this.price+1;
+      incrementCount(){
+        this.count++;
       },
-      updateDiscountRate(){
-        this.discountRate = this.discountRate+0.1;
+      incrementIndex(){
+        this.index++;
       },
-      updateIndex(){
-        this.index = this.index+1;
-      },
-      calculateFinalPrice() {
-        console.log("method")
-        return this.price * (1 - this.discountRate);
-      }
-    }
+    },
 };
 </script>
 
