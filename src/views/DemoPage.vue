@@ -1,11 +1,15 @@
 <template>
   <div>
-    <p>현재 점수: {{ score }}</p>
-    <div v-if="score >= 90">학점: A</div>
-    <div v-else-if="score >= 80">학점: B</div>
-    <div v-else-if="score >= 70">학점: C</div>
-    <div v-else-if="score >= 60">학점: D</div>
-    <div v-else>학점: F</div>
+    <ul>
+      <li v-for="(item, index) in items" :key="index">
+        <span>
+          {{ item.id }} - 
+        </span>
+        <span>
+          {{ item.name }}
+        </span>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -14,7 +18,13 @@ export default {
     name: "DemoPage",
     data() {
       return {
-        score: 85,
+        items: [
+          {id:1, name:"Apple"},
+          {id:2, name:"Banana"},
+          {id:3, name:"Orange"},
+          {id:4, name:"Data"},
+          {id:5, name:"Elderberry"},
+        ]
       };
     },    
 };
