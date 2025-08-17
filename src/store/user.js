@@ -2,13 +2,11 @@ import {defineStore} from 'pinia'
 
 export const useUserStore = defineStore('user',{
     state: () => ({
-        currentUserId: 1,
+        currentUserId: 11,
         userList: [
-            { id:1, name:"이주연" },
-            { id:2, name:"user" },
-            { id:3, name:"홍길동" },
-            { id:4, name:"lee" },
-            { id:5, name:"김유저" },
+            { id:11, name:"user" },
+            { id:12, name:"테스터" },
+            { id:13, name:"다미장" },
         ]
     }),
     getters: {
