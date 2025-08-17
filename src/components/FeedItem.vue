@@ -4,8 +4,7 @@
         <div class="feed-content">{{ feed.content }}</div>
         <button
           class="feed-delete-button"
-          v-if="canDelete"
-          @click="handleClick"
+          @click="handleClick(feed)"
         >
           X
         </button>
@@ -21,7 +20,10 @@
   export default {
     name: 'FeedItem',
     props: {
-      feed: { type: Object, required: true }
+        feed: { 
+            type: Object, 
+            required: true 
+        }
     },
     data() {
       return {
@@ -29,30 +31,28 @@
         userStore: useUserStore(),
       }
     },
-    computed: {
-      // 현재 유저만 삭제 버튼 보이게
-      canDelete() {
-        return this.userStore.currentUserId === this.feed.user.id
-      }
-    },
     methods: {
-      handleClick() {
-        // this.$confirm 플러그인 있으면 사용, 없으면 window.confirm 폴백
-        const ask = this.$confirm
-          ? new Promise(res => {
-              this.$confirm({
-                message: '정말 삭제하시겠습니까?',
-                button: { no: '아뇨', yes: '네' },
-                callback: res
-              })
-            })
-          : Promise.resolve(window.confirm('정말 삭제하시겠습니까?'))
-  
-        ask.then((ok) => {
-          if (ok) this.feedStore.removeFeed(this.feed.id)
-        })
-      }
-    }
+        handleClick(feed){
+            this.$confirm(
+                {
+                    message: '정말 삭제하시겠습니까?',
+                    button: {
+                        no: '아뇨',
+                        yes: '네'
+                    },
+                     /**
+                    * Callback Function
+                    * @param {Boolean} confirm
+                    */
+                    callback: confirm => {
+                        if (confirm) {
+                            this.feedStore.removeFeed(feed.id)
+                        }
+                    }
+                }
+            )
+        }
+    },
   }
   </script>
   
