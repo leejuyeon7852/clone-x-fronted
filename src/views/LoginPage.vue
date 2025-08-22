@@ -5,8 +5,8 @@
       </div>
       <!-- <input type="text" :placeholder="'Email'" v-model="email" />
       <input type="password" :placeholder="'Password'" v-model="password" /> --> 
-      <InputField :type="text" :placeholder="'Email'" v-model="email" :errorMsg="'이메일을 입력하세요.'"/>
-      <InputField :type="password" :placeholder="'Password'" v-model="password" :errorMsg="'비밀번호를 입력하세요.'"/>
+      <InputField type="text" :placeholder="'Email'" v-model="email" :errorMsg="'이메일을 입력하세요.'"/>
+      <InputField type="password" :placeholder="'Password'" v-model="password" :errorMsg="'비밀번호를 입력하세요.'"/>
   
       <button class="button" @click="login">로그인하기</button>
       <div>
@@ -18,20 +18,42 @@
   
   <script>
   import InputField from '@/components/InputField.vue';
+  import { useUserStore } from '@/store/user';
+  import { api } from '@/api';
 
   export default {
     name: "LoginPage",
     components: {InputField},
     data() {
       return {
+        userStore: useUserStore(),
         email: "",
         password: "",
       };
     },
     methods: {
-      login() {
-        console.log(this.email, this.password);
-        this.$router.push("/main");
+      async login() {
+        if(!this.email || !this.password){
+          alert('모든 필드를 입력해주세요.')
+        }
+
+        const payload = {
+          email: this.email,
+          password: this.password
+        }
+
+        try {
+          const response = await api.post("/users/login", payload)
+          console.log('로그인 성공')
+
+          this.userStore.setUser(response.data)
+          this.userStore.saveToken(response.data.access_token)
+
+          this.$router.push("/main");
+        }catch(error){
+          console.error("로그인 실패", error)
+          alert("로그인 실패! 다시 시도해주세요.")
+        }
       },
     },
   };

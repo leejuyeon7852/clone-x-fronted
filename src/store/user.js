@@ -1,19 +1,30 @@
-import {defineStore} from 'pinia'
+import { defineStore } from 'pinia'
 
-export const useUserStore = defineStore('user',{
-    state: () => ({
-        currentUserId: 11,
-        userList: [
-            { id:11, name:"user" },
-            { id:12, name:"테스터" },
-            { id:13, name:"다미장" },
-        ]
-    }),
-    getters: {
-        getUsername: (state) => {
-            const u = state.userList.find(u => u.id === state.currentUserId)
-            return u ? u.name : 'User'
-        },
-        getUserListLength: (state) => state.userList.length
+export const useUserStore = defineStore('user', {
+  state: () => {
+    const userData = JSON.parse(localStorage.getItem('user')) || {}
+    return {
+        name: userData.name || '',
+        id: userData.id || '',
+        email: userData.email || '',
     }
+  },
+  getters: {
+    placeholder: (state) => `what's good, ${state.name}?`
+  },
+  actions: {
+    setUser(res) {
+        this.name = res.name
+        this.id = res.id
+        this.email = res.email
+        localStorage.setItem('user', JSON.stringify({
+            name: res.name,
+            id: res.id,
+            email: res.email,
+        }))
+    },
+    saveToken(accessToken) {
+        localStorage.setItem("access_token", accessToken)
+    },
+  }
 })
