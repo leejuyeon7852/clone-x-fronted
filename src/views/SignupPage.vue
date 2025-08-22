@@ -20,6 +20,8 @@
 
 <script>
 import InputField from '@/components/InputField.vue';
+import { api } from '@/api';
+
 export default {
     name: "SignupPage",
     components: {InputField},
@@ -30,6 +32,30 @@ export default {
             password: "",
             passwordConfirm: ""
         };
+    },
+    methods: {
+      async signUp(){
+        if(!this.email || !this.name || !this.password){
+          alert('모든 필드를 입력해주세요.')
+          return
+        }
+        if(!this.isPasswordMatch){
+          alert('비밀번호가 일치하지 않습니다.')
+          return
+        }
+        try{
+          const response = await api.post("/users", {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          })
+          console.log("회원가입 성공:"+ response.data)
+          this.$router.push("/")
+        }catch(error){
+          console.log("회원가입 실패:"+ error)
+          alert("회원가입 실패")
+        } 
+      }
     },
     computed: {
       isPasswordMatch(){

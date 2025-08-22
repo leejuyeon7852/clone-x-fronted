@@ -10,7 +10,8 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
-    placeholder: (state) => `what's good, ${state.name}?`
+    placeholder: (state) => `what's good, ${state.name}?`,
+    getUsername: (state) => state.name || 'User',
   },
   actions: {
     setUser(res) {
